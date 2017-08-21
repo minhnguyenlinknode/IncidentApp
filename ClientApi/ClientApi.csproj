@@ -40,7 +40,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="HttpHelper.cs" />
-    <Compile Include="IncidentApi.cs" />
+    <Compile Include="IncidentClientApi.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

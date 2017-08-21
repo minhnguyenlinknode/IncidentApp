@@ -10,9 +10,9 @@ namespace ClientApi
 {
     public class HttpHelper
     {
-        public static async Task<T> GetJsonAsync<T>(string url) where T : new()
+        public static async Task<T> GetJsonAsync<T>(string url) 
         {
-            var result = new T();
+            T result = default(T);
 
             using (var client = new HttpClient())
             {
@@ -25,6 +25,35 @@ namespace ClientApi
                 }
 
                 return result;
+            }
+        }
+
+        public static async Task<string> PostJsonAsync<T>(string url, T data)
+        {
+            using (var client = new HttpClient())
+            {
+                string result = null;
+
+                var jsonData = JsonConvert.SerializeObject(data);
+                var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
+                var response = await client.PostAsync(url, content);
+
+                if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                {
+                    result = await response.Content.ReadAsStringAsync();
+                }
+
+                return result;
+            }
+        }
+
+        public static async Task DeleteJsonAsync(string url)
+        {
+            using (var client = new HttpClient())
+            {
+                var response = await client.DeleteAsync(url);
+
+                response.EnsureSuccessStatusCode();
             }
         }
     }

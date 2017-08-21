@@ -1,4 +1,5 @@
 ﻿using ClientApi;
+using IncidentWebApp.Classes;
 using IncidentWebApp.Models.Incident;
 using System;
 using System.Collections.Generic;
@@ -16,75 +17,72 @@ namespace IncidentWebApp.Controllers
         {
             var model = new IncidentListModel();
 
-            model.Incidents = await IncidentApi.GetAllIncidentsAsync();
+            model.Incidents = await IncidentClientApi.GetAllIncidentsAsync();
+
+            return View(model);
+        }
+        
+        public ActionResult Create()
+        {
+            var model = new IncidentCreateModel();
+
+            model.IncidentTypeList = Utils.GetAllIncidentTypeList();
 
             return View(model);
         }
 
-        // GET: Incident/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: Incident/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        [ValidateAntiForgeryToken()]
+        public async Task<ActionResult> Create(IncidentCreateModel model)
         {
-            try
+            if (ModelState.IsValid)
             {
-                // TODO: Add insert logic here
+                int idCreated = await IncidentClientApi.CreateIncidentAsync(new BusinessObject.Incident()
+                {
+                    IncidentName = model.IncidentName,
+                    CreatedDate = model.CreatedDate,
+                    NumberPeople = model.NumberPeople,
+                    IsUrgent = model.IsUrgent,
+                    IncidentType = model.SelectedIncidentType
+                });
 
                 return RedirectToAction("Index");
             }
-            catch
-            {
-                return View();
-            }
-        }
 
-        // GET: Incident/Edit/5
-        public ActionResult Edit(int id)
+            model.IncidentTypeList = Utils.GetAllIncidentTypeList();
+
+            return View(model);           
+        }
+        
+        public async Task<ActionResult> Edit(int id)
         {
-            return View();
-        }
+            var incident = await IncidentClientApi.GetIncidentByIdAsync(id);
 
-        // POST: Incident/Edit/5
+            var model = new IncidentCreateModel(incident);         
+
+            model.IncidentTypeList = Utils.GetAllIncidentTypeList();
+            return View(model);
+        }
+        
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        [ValidateAntiForgeryToken()]
+        public async Task<ActionResult> Edit(int id, IncidentCreateModel model)
         {
-            try
+            if (ModelState.IsValid)
             {
-                // TODO: Add update logic here
-
+                var incident = model.GetIncidentObj();
+                await IncidentClientApi.UpdateIncidentAsync(incident);
                 return RedirectToAction("Index");
             }
-            catch
-            {
-                return View();
-            }
+
+            model.IncidentTypeList = Utils.GetAllIncidentTypeList();
+            return View(model);
         }
-
-        // GET: Incident/Delete/5
-        public ActionResult Delete(int id)
+        
+        public async Task<ActionResult> Delete(int id)
         {
-            return View();
-        }
-
-        // POST: Incident/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+            await IncidentClientApi.DeleteIncidentAsync(id);
+            return RedirectToAction("Index");
         }
     }
 }

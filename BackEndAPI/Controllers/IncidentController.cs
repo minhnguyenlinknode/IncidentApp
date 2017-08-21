@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Http;
 
 namespace BackEndAPI.Controllers
@@ -11,31 +12,37 @@ namespace BackEndAPI.Controllers
     //[Authorize]
     public class IncidentController : ApiController
     {
-        public IEnumerable<BusinessObject.Incident> GetAllIncidents()
+        public async Task<IEnumerable<BusinessObject.Incident>> GetAllIncidentsAsync()
         {
-            return IncidentManager.GetAllIncidents();
+            return await IncidentManager.GetAllIncidentsAsync();
         }
 
-        // GET api/values/5
-        public IHttpActionResult GetIncident(int id)
+        public async Task<IHttpActionResult> GetIncidentAsync(int id)
         {
-            return null;
+            var incident = await IncidentManager.GetIncidentByIdAsync(id);
+
+            if (incident == null)
+                return NotFound();
+
+            return Ok(incident);
         }
 
-        // POST api/values
-        public void Post([FromBody]string value)
+        // POST CREATE
+        public async Task<int> CreateIncidentAsync(BusinessObject.Incident incident)
         {
-
+            return await IncidentManager.CreateIncidentAsync(incident);
         }
 
-        // PUT api/values/5
-        public void Put(int id, [FromBody]string value)
+        // POST UPDATE
+        public async Task UpdateIncidentAsync(BusinessObject.Incident incident)
         {
+            await IncidentManager.UpdateIncidentAsync(incident);
         }
 
-        // DELETE api/values/5
-        public void Delete(int id)
+        // POST DELETE
+        public async Task DeleteIncidentAsync(int id)
         {
+            await IncidentManager.DeleteIncidentAsync(id);
         }
     }
 }
