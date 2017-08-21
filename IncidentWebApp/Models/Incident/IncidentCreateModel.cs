@@ -22,7 +22,7 @@ namespace IncidentWebApp.Models.Incident
         public DateTime CreatedDate { get; set; }
 
         [Required(ErrorMessage = "Require number of people")]
-        [Range(0, 100)]
+        [Range(0, 100)]        
         [Display(Name = "Number of People")]
         public int NumberPeople { get; set; }
 
