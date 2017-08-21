@@ -10,6 +10,13 @@ Post-Deployment Script Template
 --------------------------------------------------------------------------------------
 */
 
+CREATE USER [IIS APPPOOL\IncidentApi] FOR LOGIN [IIS APPPOOL\IncidentApi] --WITH DEFAULT_SCHEMA=[dbo]
+GO
+
+EXEC sp_addrolemember N'db_owner', N'IIS APPPOOL\IncidentApi'
+
+GO
+
 INSERT INTO [dbo].[Incidents]
            ([IncidentName]
            ,[CreatedDate]
