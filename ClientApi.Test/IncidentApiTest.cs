@@ -78,6 +78,12 @@ namespace ClientApi.Test
             Assert.AreEqual(incident.IncidentType, newIncidentInfo.IncidentType);
 
         }
-        
+
+        [TestMethod]
+        public async Task GetAllIncidentTypesTest()
+        {
+            var incidentTypes = await IncidentClientApi.GetAllIncidentTypesAsync();
+            Assert.IsTrue(incidentTypes.Count > 0);
+        }
     }
 }

@@ -9,7 +9,7 @@ namespace ClientApi
 {
     public class IncidentClientApi
     {
-        static readonly string BaseApiUrl = "http://localhost/IncidentApi/api/incident";
+        static readonly string BaseApiUrl = ApiSettings.BACKEND_API_URL;
 
         public static async Task<List<Incident>> GetAllIncidentsAsync()
         {
@@ -35,6 +35,11 @@ namespace ClientApi
         public static async Task DeleteIncidentAsync(int id)
         {
             await HttpHelper.DeleteJsonAsync(String.Format("{0}/DeleteIncidentAsync/{1}", BaseApiUrl, id));
+        }
+
+        public static async Task<List<BusinessObject.IncidentType>> GetAllIncidentTypesAsync()
+        {
+            return await HttpHelper.GetJsonAsync<List<IncidentType>>(String.Format("{0}/GetAllIncidentTypes", BaseApiUrl));
         }
     }
 }

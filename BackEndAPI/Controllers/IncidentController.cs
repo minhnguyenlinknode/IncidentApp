@@ -44,5 +44,10 @@ namespace BackEndAPI.Controllers
         {
             await IncidentManager.DeleteIncidentAsync(id);
         }
+
+        public List<BusinessObject.IncidentType> GetAllIncidentTypes()
+        {
+            return IncidentTypeManager.GetAllIncidentTypes();
+        }
     }
 }

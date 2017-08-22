@@ -22,11 +22,11 @@ namespace IncidentWebApp.Controllers
             return View(model);
         }
         
-        public ActionResult Create()
+        public async Task<ActionResult> Create()
         {
             var model = new IncidentCreateModel();
 
-            model.IncidentTypeList = Utils.GetAllIncidentTypeList();
+            model.IncidentTypeList = await Utils.GetAllIncidentTypeList();
 
             return View(model);
         }
@@ -49,7 +49,7 @@ namespace IncidentWebApp.Controllers
                 return RedirectToAction("Index");
             }
 
-            model.IncidentTypeList = Utils.GetAllIncidentTypeList();
+            model.IncidentTypeList = await Utils.GetAllIncidentTypeList();
 
             return View(model);           
         }
@@ -60,7 +60,7 @@ namespace IncidentWebApp.Controllers
 
             var model = new IncidentCreateModel(incident);         
 
-            model.IncidentTypeList = Utils.GetAllIncidentTypeList();
+            model.IncidentTypeList = await Utils.GetAllIncidentTypeList();
             return View(model);
         }
         
@@ -75,7 +75,7 @@ namespace IncidentWebApp.Controllers
                 return RedirectToAction("Index");
             }
 
-            model.IncidentTypeList = Utils.GetAllIncidentTypeList();
+            model.IncidentTypeList = await Utils.GetAllIncidentTypeList();
             return View(model);
         }
         
