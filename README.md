@@ -12,4 +12,5 @@ This is a basic architecture framework for creating new project using WebAPI ser
 
 # Author
  Minh Nguyen (c) 2017
+ 
  Note: For SHE Soft Test
