@@ -2,6 +2,8 @@
 
 This is a basic architecture framework for creating new project using WebAPI services 
 
+![Architecture Diagram](https://github.com/minhnguyenlinknode/IncidentApp/raw/master/Diagram.jpg)
+
 1. BackEnd service:
    + 3-tier architecture using WebAPI with Entity framework
 
