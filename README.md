@@ -1,6 +1,7 @@
 # WebAPI & MVC/MVVMCross App test
 
 This is a basic architecture framework for creating new project using WebAPI services.
+
 A test web app version can be accessed here: http://incidentwebapp.azurewebsites.net/Incident 
 
 ![Architecture Diagram](https://github.com/minhnguyenlinknode/IncidentApp/raw/master/Diagram.jpg)
